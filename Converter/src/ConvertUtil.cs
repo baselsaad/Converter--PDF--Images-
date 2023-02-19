@@ -31,6 +31,17 @@ namespace Converter
         public static void PdfToImage(string pdfFilePath, string imagePath)
         {
             string newFolderPath = Path.Combine(imagePath, "ConvertedImages");
+
+            // if Directory Exists, change the name, to avoid overwriting the existing one!
+            int i = 1;
+            string copyName = newFolderPath;
+            while(Directory.Exists(newFolderPath))
+            {
+                newFolderPath = copyName;
+                newFolderPath += "("+i+")";
+                i++;
+            }
+
             Directory.CreateDirectory(newFolderPath);
 
             using (MagickImageCollection images = new MagickImageCollection())
